@@ -1,0 +1,17 @@
+language: php
+php:
+  - 7.2
+  - 7.3
+before_script:
+  - travis_retry composer self-update
+  - travis_retry composer global require hirak/prestissimo
+  - travis_retry composer install --no-interaction --prefer-source --dev
+script:
+  - composer cscheck
+  - composer phpstan
+  - composer phpunit
+  - composer bccheck
+#  - composer infection
+  - composer clover
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
